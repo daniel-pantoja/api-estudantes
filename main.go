@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/daniel-pantoja/api-estudante/db"
+	
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -33,6 +35,7 @@ func getEstudantes(c echo.Context) error {
 }
 
 func createEstudante(c echo.Context) error {
+	db.AddEstudante()
 	return c.String(http.StatusOK, "Cadastro um estudante")
 }
 
