@@ -39,8 +39,11 @@ func createEstudante(c echo.Context) error {
 	if err := c.Bind(&estudante); err != nil {
 		return err
 	}
-	db.AddEstudante(estudante)
-	return c.String(http.StatusOK, "Cadastro um estudante")
+	if err := db.AddEstudante(estudante); err != nil {
+		return c.String(http.StatusInternalServerError, "Error ao cadastrar estudante")
+	}
+	
+	return c.String(http.StatusOK, "Estudante cadastrado")
 }
 
 func getEstudante(c echo.Context) error {
