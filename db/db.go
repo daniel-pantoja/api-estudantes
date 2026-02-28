@@ -10,6 +10,7 @@ import (
 type EstudanteManipula struct {
 	DB *gorm.DB
 }
+
 type Estudante struct {
 	gorm.Model
 	Nome  string `json:"name"`
@@ -54,4 +55,8 @@ func (s *EstudanteManipula) GetEstudante(id int) (Estudante, error) {
 	var estudante Estudante
 	err := s.DB.First(&estudante, id)
 	return estudante, err.Error
+}
+
+func (s *EstudanteManipula) UpdateEstudante(updateEstudante Estudante) error {
+	return s.DB.Save(&updateEstudante).Error
 }
