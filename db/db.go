@@ -49,3 +49,9 @@ func  (s *EstudanteManipula) GetEstudantes() ([]Estudante, error) {
 	err := s.DB.Find(&estudantes).Error 
 	return estudantes, err
 }
+
+func (s *EstudanteManipula) GetEstudante(id int) (Estudante, error) {
+	var estudante Estudante
+	err := s.DB.First(&estudante, id)
+	return estudante, err.Error
+}
