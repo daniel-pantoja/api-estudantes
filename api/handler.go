@@ -17,7 +17,9 @@ func (api *API) getEstudantes(c echo.Context) error {
 		return c.String(http.StatusNotFound, "Falha em obter os estudantes")
 	}
 
-	return c.JSON(http.StatusOK, estudantes)
+	listaEstudantes := map[string][]schemas.RespostaEstudante{"Estudantes": schemas.NovaResposta(estudantes)}
+
+	return c.JSON(http.StatusOK, listaEstudantes)
 }
 
 func (api *API) createEstudante(c echo.Context) error {
@@ -25,7 +27,7 @@ func (api *API) createEstudante(c echo.Context) error {
 	if err := c.Bind(&estudanteSolici); err != nil {
 		return err
 	}
-	
+
 if err := estudanteSolici.Validação(); err != nil {
 		log.Error().Err(err).Msgf("[api] erro ao validar estrutura")
 		return c.String(http.StatusBadRequest, "Erro para validar estudante")
@@ -43,7 +45,7 @@ if err := estudanteSolici.Validação(); err != nil {
 		return c.String(http.StatusInternalServerError, "Erro para cadastrar estudante")
 	}
 
-	return c.String(http.StatusOK, "Estudante cadastrado")
+	return c.JSON(http.StatusOK, estudante)
 }
 
 func (api *API) getEstudante(c echo.Context) error {
